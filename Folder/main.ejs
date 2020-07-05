@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+        <body style="background-color: grey;">
+
+            <div class="container">
+                <div>
+                    <br>
+                    <form action="/bycity" method="POST">
+                        <input style="margin: 0px;" type="text" placeholder="Enter a city" class="form-group" id="city" name="city">
+                        &nbsp; &nbsp; &nbsp; 
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    </form>
+                </div>
+                <br>
+                <a href="/" style="color: black; ">Reload</a>
+
+                <hr>
+                <table class="table table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col">City</th>
+                        <th scope="col">Temperature ( &deg;C )</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Icon</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% if(typeof(data) == 'undefined') {%>
+                      <tr>
+                        <th scope="row">-</th>
+                        <td>Enter a city</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    <% }
+                    else if(data.cod != 200){%>
+                        <tr>
+                            <th scope="row">-</th>
+                            <td>City not found</td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                    <% }
+                    else{ %>
+                        <tr>
+                            <th scope="row" style="margin-top: 5px;"><%= data.name%></th>
+                            <td style="margin-top: 5px;"><%= data.main.temp - 273.15%></td>
+                            <td style="margin-top: 5px;"><%= data.weather[0].main%></td>
+                            <td><img src="http://openweathermap.org/img/wn/<%= data.weather[0].icon%>.png" alt="<%= data.weather[0].main%>"></td>
+                          </tr>
+                    <% } %>
+                    </tbody>
+                  </table>
+
+            </div>
+
+            
+
+        </body>
+</html>
